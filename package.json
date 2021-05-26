@@ -1,7 +1,9 @@
 {
   "name": "start-dash",
   "version": "1.0.0",
-  "engines" : { "node" : ">=12.14.0" },
+  "engines": {
+    "node": ">=12.14.0"
+  },
   "scripts": {
     "start": "./bin/webpack-dev-server",
     "build": "./bin/webpack",

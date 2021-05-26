@@ -28,6 +28,7 @@
 
 FactoryBot.define do
   factory :article do
-    
+    type { 'Tag' }
+    name { 'テストタグ' }
   end
 end
