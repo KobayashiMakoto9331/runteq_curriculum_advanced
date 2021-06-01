@@ -37,7 +37,7 @@ class Admin::ArticlesController < ApplicationController
     if @article.update(article_params)
       if @article.state == 'draft' # 下書きならそのまま
         @article.draft!
-        flash[:notice] = '記事を更新しました'
+        flash[:notice] = '更新しました'
       elsif Time.current >= @article.published_at # 現在時刻が公開日より後なら、公開に変更
         @article.published!
         flash[:notice] = '記事を公開しました'

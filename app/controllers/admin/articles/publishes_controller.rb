@@ -11,7 +11,7 @@ class Admin::Articles::PublishesController < ApplicationController
       flash[:notice] = '記事を公開しました'
     else
       @article.state = :publish_wait
-      flash[:notice] = '更新しました'
+      flash[:notice] = '記事を公開待ちにしました'
     end
 
     if @article.valid?
