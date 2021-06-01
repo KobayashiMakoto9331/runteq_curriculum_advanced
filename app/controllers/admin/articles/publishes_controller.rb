@@ -8,7 +8,7 @@ class Admin::Articles::PublishesController < ApplicationController
 
     if Time.current >= @article.published_at
       @article.state = :published
-      flash[:notice] = '記事を公開しました'
+      flash[:notice] = '更新しました'
     else
       @article.state = :publish_wait
       flash[:notice] = '記事を公開待ちにしました'
