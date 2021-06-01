@@ -40,10 +40,10 @@ class Admin::ArticlesController < ApplicationController
         flash[:notice] = '更新しました'
       elsif Time.current >= @article.published_at # 現在時刻が公開日より後なら、公開に変更
         @article.published!
-        flash[:notice] = '記事を公開しました'
+        flash[:notice] = '更新しました'
       elsif Time.current < @article.published_at # 公開日が未来になっているのは、公開待ち
         @article.publish_wait!
-        flash[:notice] = '記事を公開待ちにしました'
+        flash[:notice] = '更新しました'
       end
 
       redirect_to edit_admin_article_path(@article.uuid)
