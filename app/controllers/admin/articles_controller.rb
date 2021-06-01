@@ -35,18 +35,17 @@ class Admin::ArticlesController < ApplicationController
     authorize(@article)
 
     if @article.update(article_params)
-      if @article.state == 'draft'#下書きならそのまま
+      if @article.state == 'draft' # 下書きならそのまま
         @article.draft!
         flash[:notice] = '記事を更新しました'
-      elsif Time.current >= @article.published_at #現在時刻が公開日より後なら、公開に変更
+      elsif Time.current >= @article.published_at # 現在時刻が公開日より後なら、公開に変更
         @article.published!
         flash[:notice] = '記事を公開しました'
-      elsif Time.current < @article.published_at #公開日が未来になっているのは、公開待ち
+      elsif Time.current < @article.published_at # 公開日が未来になっているのは、公開待ち
         @article.publish_wait!
         flash[:notice] = '記事を公開待ちにしました'
       end
 
-      
       redirect_to edit_admin_article_path(@article.uuid)
     else
       render :edit
