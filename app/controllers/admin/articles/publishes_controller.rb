@@ -5,15 +5,20 @@ class Admin::Articles::PublishesController < ApplicationController
 
   def update
     @article.published_at = Time.current unless @article.published_at?
-    @article.state = :published
+
+    if Time.current >= @article.published_at
+      @article.state = :published
+      flash[:notice] = '記事を公開しました'
+    else
+      @article.state = :publish_wait
+      flash[:notice] = '記事を公開待ちにしました'
+    end
 
     if @article.valid?
       Article.transaction do
         @article.body = @article.build_body(self)
         @article.save!
       end
-
-      flash[:notice] = '記事を公開しました'
 
       redirect_to edit_admin_article_path(@article.uuid)
     else
