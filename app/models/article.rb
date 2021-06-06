@@ -60,10 +60,14 @@ class Article < ApplicationRecord
   before_create -> { self.uuid = SecureRandom.uuid }
 
   scope :viewable, -> { published.where('published_at < ?', Time.current) }
-  scope :post_published, -> { where('published_at < ?', Time.current) }
+  scope :past_published, -> { where('published_at < ?', Time.current) }
   scope :new_arrivals, -> { viewable.order(published_at: :desc) }
+
   scope :by_category, ->(category_id) { where(category_id: category_id) }
+  scope :by_author, ->(author_id) { where(author_id: author_id) }
+  scope :by_tag, ->(tag_id) { where(tag_id: tag_id) }
   scope :title_contain, ->(word) { where('title LIKE ?', "%#{word}%") }
+  scope :body_contain, ->(word) { where('body LIKE ?', "%#{word}%") }
 
   def build_body(controller)
     result = ''
@@ -90,5 +94,27 @@ class Article < ApplicationRecord
 
   def prev_article
     @prev_article ||= Article.viewable.order(published_at: :desc).find_by('published_at < ?', published_at)
+  end
+
+  def publishable?
+    Time.current >= published_at
+  end
+
+  def message_on_published
+    if published?
+      '記事を公開しました'
+    elsif publish_wait?
+      '記事を公開待ちにしました'
+    end
+  end
+
+  def adjust_state
+    return if draft?
+    
+    self.state =  if self.published_at <= Time.current
+                    :published
+                  else
+                    :publish_wait
+                  end
   end
 end

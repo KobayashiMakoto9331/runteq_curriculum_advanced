@@ -29,6 +29,6 @@ set :environment, rails_env
 set :output, "#{Rails.root}/log/cron.log"
 
   # rakeタスクを1時間ごとに実行
-  every 1.hour do
+  every :hour do
     rake 'status_task:update_status_task'
   end
