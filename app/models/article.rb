@@ -113,8 +113,8 @@ class Article < ApplicationRecord
 
     self.state = if published_at <= Time.current
                   :published
-                else
+                 else
                   :publish_wait
-                end
+                 end
   end
 end
