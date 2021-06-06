@@ -112,9 +112,9 @@ class Article < ApplicationRecord
     return if draft?
 
     self.state = if published_at <= Time.current
-                  :published
+                   :published
                  else
-                  :publish_wait
+                   :publish_wait
                  end
   end
 end
