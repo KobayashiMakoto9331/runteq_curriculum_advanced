@@ -7,7 +7,6 @@ class SearchArticlesForm
   attribute :tag_id, :integer
   attribute :title, :string
   attribute :body, :string
-  
 
   def search
     relation = Article.distinct
@@ -33,6 +32,6 @@ class SearchArticlesForm
   end
 
   def body_words
-    body.present? ? body.split(nil) : []
+    body.present? ? body.split('') : []
   end
 end

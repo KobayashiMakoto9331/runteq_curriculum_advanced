@@ -33,8 +33,8 @@ class Admin::ArticlesController < ApplicationController
 
   def update
     authorize(@article)
-      @article.assign_attributes(article_params)
-      @article.adjust_state
+    @article.assign_attributes(article_params)
+    @article.adjust_state
     if @article.save!
       flash[:notice] = '更新しました'
       redirect_to edit_admin_article_path(@article.uuid)
@@ -61,6 +61,7 @@ class Admin::ArticlesController < ApplicationController
 
   def search_params
     params[:q]&.permit(:title, :body, :category_id, :author_id, :tag_id)
+
   end
 
   def set_article
