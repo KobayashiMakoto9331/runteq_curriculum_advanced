@@ -61,7 +61,6 @@ class Admin::ArticlesController < ApplicationController
 
   def search_params
     params[:q]&.permit(:title, :body, :category_id, :author_id, :tag_id)
-
   end
 
   def set_article
