@@ -5,7 +5,6 @@ class Admin::ArticlesController < ApplicationController
 
   def index
     authorize(Article)
-
     @search_articles_form = SearchArticlesForm.new(search_params)
     @articles = @search_articles_form.search.order(id: :desc).page(params[:page]).per(25)
   end

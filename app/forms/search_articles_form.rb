@@ -32,6 +32,6 @@ class SearchArticlesForm
   end
 
   def body_words
-    body.present? ? body.split('') : []
+    body.present? ? body.split(nil) : []
   end
 end
