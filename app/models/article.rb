@@ -37,15 +37,18 @@ class Article < ApplicationRecord
   has_many :media, through: :article_blocks, source: :blockable, source_type: 'Medium'
   has_many :embeds, through: :article_blocks, source: :blockable, source_type: 'Embed'
 
+  # has_one_attached :eye_catch, allow_nil: true
   has_one_attached :eye_catch
 
   enum state: { draft: 0, published: 1, publish_wait: 2 }
+  enum eyecatch_position: { left: 0, center: 1, right: 2 }
 
   validates :slug, slug_format: true, uniqueness: true, length: { maximum: 255 }, allow_blank: true
   validates :title, presence: true, uniqueness: true, length: { maximum: 255 }
   validates :description, length: { maximum: 1000 }, allow_blank: true
   validates :state, presence: true
   validates :eye_catch, attachment: { purge: true, content_type: %r{\Aimage/(png|jpeg)\Z}, maximum: 10_485_760 }
+  validates :eyecatch_width, allow_nil: true, numericality: { less_than_or_equal_to: 700, greater_than_or_equal_to: 100}
 
   with_options if: :published? do
     validates :slug, slug_format: true, presence: true, length: { maximum: 255 }
