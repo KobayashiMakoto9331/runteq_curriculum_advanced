@@ -18,6 +18,7 @@
         h3.box-title 情報
 
       = simple_form_for @article, url: admin_article_path(@article.uuid) do |f|
+
         .box-body
           - if @article.draft?
             .form-group
